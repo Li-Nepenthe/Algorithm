@@ -1,13 +1,5 @@
 package LinkedList
 
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-
 // 假设从表头到入环的长度为a，从环入口到相遇点的距离为b，从相遇点到环入口的节点为c
 // 则环长C = b+c
 // slow = 1 fast = 2  假设slow走了n圈 fast走了m圈 相遇 m > n
@@ -18,6 +10,22 @@ package LinkedList
 // 故从相遇点出发和从表头出发 到表头走了a到环入口时 相遇点再走了(m-2n-1)*C圈后再走C-b即c后也到了环入口
 
 func detectCycle(head *ListNode) *ListNode {
-
+	slow, fast := head, head
+	for fast != nil {
+		fast = fast.Next
+		if fast == nil {
+			return nil
+		}
+		slow = slow.Next
+		fast = fast.Next
+		if slow == fast {
+			p, q := head, slow
+			for p != q {
+				p = p.Next
+				q = q.Next
+			}
+			return p
+		}
+	}
 	return nil
 }
