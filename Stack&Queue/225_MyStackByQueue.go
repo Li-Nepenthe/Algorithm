@@ -1,27 +1,27 @@
 package Stack_Queue
 
-type Queue struct {
+type queue struct {
 	data []int
 }
 
-func NewQueue() *Queue {
-	return &Queue{
+func newQueue() *queue {
+	return &queue{
 		data: make([]int, 0, 100),
 	}
 }
 
-func (q *Queue) Len() int {
+func (q *queue) Len() int {
 	return len(q.data)
 }
 
-func (q *Queue) Push(x int) {
+func (q *queue) Push(x int) {
 	if q.Len() == cap(q.data) {
 		return
 	}
 	q.data = append(q.data, x)
 }
 
-func (q *Queue) Pop() int {
+func (q *queue) Pop() int {
 	if q.Len() == 0 {
 		return -1
 	}
@@ -30,26 +30,26 @@ func (q *Queue) Pop() int {
 	return x
 }
 
-func (q *Queue) Peek() int {
+func (q *queue) Peek() int {
 	if q.Len() == 0 {
 		return -1
 	}
 	return q.data[0]
 }
 
-func (q *Queue) Empty() bool {
+func (q *queue) Empty() bool {
 	return q.Len() == 0
 }
 
 type MyStack struct {
-	InQueue  *Queue
-	OutQueue *Queue
+	InQueue  *queue
+	OutQueue *queue
 }
 
 func Constructor() MyStack {
 	return MyStack{
-		InQueue:  NewQueue(),
-		OutQueue: NewQueue(),
+		InQueue:  newQueue(),
+		OutQueue: newQueue(),
 	}
 }
 
