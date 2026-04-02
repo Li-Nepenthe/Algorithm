@@ -34,7 +34,6 @@ func deleteNode(root *TreeNode, key int) *TreeNode {
 		}
 		root.Val = minNode.Val
 		root.Right = deleteNode(root.Right, minNode.Val)
-
 	}
 	return root
 }
