@@ -17,5 +17,6 @@ func maxSubArray(nums []int) int {
 			curSum = 0
 		}
 	}
+
 	return maxSum
 }
