@@ -1,19 +1,53 @@
 package Greedy
 
+import "strconv"
+
+package Greedy
+
+import (
+"strconv"
+)
+
 func monotoneIncreasingDigits(n int) int {
-	//要想数最大 最高位必须最大
-	number := make([]int, 0)
-	length, last, flag := 0, 0, true
-	for n > 0 {
-		if last > n%10 {
-			flag = false
-		}
-		last = n % 10
-		number = append(number, last)
-		n = n / 10
-		length++
+	// 1. 将数字转为字符串（字节数组），方便按位操作
+	s := []byte(strconv.Itoa(n))
+	length := len(s)
+	if length <= 1 {
+		return n
 	}
+
+	// 2. 找到需要变为 9 的起始位置
+	// 默认为长度，表示不需要变 9
+	flag := length
+
+
+	// 本题之所以要从后往前回溯 就是模拟借位的过程
+	// 如果从左往右也就是从高到低，那么如果一个数比他的高位要高或者相等，由于下一个数不行导致当前的数借位
+	// 那么就会导致原本符合递增的顺序变得不符合了，这种从左往右还会一直影响左边已经排好的顺序
+	// 那么如果从右往左，每一个都只用考虑当前的值是不是比上一个小或者等于，因为上一个已经不会再变的更小了 这是核心
+
+	//我觉得为什么选择从右往左而不是从左往右的核心就是
+	//针对一个数 你必须比你上一个的要大，但是在遍历的过程中你这个数是有可能变小的
+	//你无法保证这个数变小之后还能大于之前的数，
+	//而如果从右边向左，你只需要考虑当前的数比刚刚遍历的小于或者等于
+	//而刚刚已经走过的数 只可能更大（变为9）不可能更小
+
+
+	for i := length - 1; i > 0; i-- {
+		// 一旦发现高位的数字比低位的大 则说明当前的数字不合法 为了使值合法 得牺牲高位的值
+		if s[i-1] > s[i] {
+			s[i-1]-- // 前一位减 1
+			// 记录最后一次
+			flag = i   // 记录从哪里开始后面都要变 9
+		}
+	}
+
+	// 4. 将 flag 之后的所有位填充为 '9'
+	for i := flag; i < length; i++ {
+		s[i] = '9'
+	}
+
+	// 5. 转回 int
+	res, _ := strconv.Atoi(string(s))
+	return res
 }
-
-func getMin(a int, b int) int {
-
