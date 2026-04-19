@@ -1,11 +1,7 @@
 package Greedy
 
-import "strconv"
-
-package Greedy
-
 import (
-"strconv"
+	"strconv"
 )
 
 func monotoneIncreasingDigits(n int) int {
@@ -20,7 +16,6 @@ func monotoneIncreasingDigits(n int) int {
 	// 默认为长度，表示不需要变 9
 	flag := length
 
-
 	// 本题之所以要从后往前回溯 就是模拟借位的过程
 	// 如果从左往右也就是从高到低，那么如果一个数比他的高位要高或者相等，由于下一个数不行导致当前的数借位
 	// 那么就会导致原本符合递增的顺序变得不符合了，这种从左往右还会一直影响左边已经排好的顺序
@@ -32,13 +27,12 @@ func monotoneIncreasingDigits(n int) int {
 	//而如果从右边向左，你只需要考虑当前的数比刚刚遍历的小于或者等于
 	//而刚刚已经走过的数 只可能更大（变为9）不可能更小
 
-
 	for i := length - 1; i > 0; i-- {
 		// 一旦发现高位的数字比低位的大 则说明当前的数字不合法 为了使值合法 得牺牲高位的值
 		if s[i-1] > s[i] {
 			s[i-1]-- // 前一位减 1
 			// 记录最后一次
-			flag = i   // 记录从哪里开始后面都要变 9
+			flag = i // 记录从哪里开始后面都要变 9
 		}
 	}
 
